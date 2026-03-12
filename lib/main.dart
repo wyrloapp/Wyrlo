@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wyrlo/map_screen.dart';
 
 void main() {
   runApp(const WyrloApp());
@@ -183,7 +184,7 @@ class _WyrloShellState extends State<WyrloShell> {
   Widget build(BuildContext context) {
     final pages = [
       const HomeScreen(),
-      const Center(child: Text('Map')),
+      const MapScreen(),
       const Center(child: Text('Create')),
       const Center(child: Text('Messages')),
       const Center(child: Text('Profile')),
