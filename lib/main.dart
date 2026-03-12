@@ -263,58 +263,73 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ..._filteredEvents.map(
-            (event) => Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: EventCard(
-                event: event,
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => EventDetailScreen(event: event),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Find by categories',
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 8),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ChoiceChip(
-                  label: const Text('All'),
-                  selected: _selectedCategory == null,
-                  onSelected: (_) {
-                    setState(() => _selectedCategory = null);
-                  },
+                Text(
+                  'Find by categories',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
-                const SizedBox(width: 8),
-                ..._allCategories.map(
-                  (c) => Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: ChoiceChip(
-                      label: Text(c),
-                      selected: _selectedCategory == c,
-                      onSelected: (_) {
-                        setState(() => _selectedCategory = c);
-                      },
-                    ),
+                const SizedBox(height: 8),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      ChoiceChip(
+                        label: const Text('All'),
+                        selected: _selectedCategory == null,
+                        onSelected: (_) {
+                          setState(() => _selectedCategory = null);
+                        },
+                      ),
+                      const SizedBox(width: 8),
+                      ..._allCategories.map(
+                        (c) => Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: ChoiceChip(
+                            label: Text(c),
+                            selected: _selectedCategory == c,
+                            onSelected: (_) {
+                              setState(() => _selectedCategory = c);
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
+            ),
+          ),
+          const Divider(height: 1),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: _filteredEvents.length,
+              itemBuilder: (context, index) {
+                final event = _filteredEvents[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: EventCard(
+                    event: event,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => EventDetailScreen(event: event),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -338,9 +353,9 @@ class EventCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: AspectRatio(
-          aspectRatio: 16 / 9,
+        borderRadius: BorderRadius.circular(20),
+        child: SizedBox(
+          height: 130,
           child: Stack(
             fit: StackFit.expand,
             children: [
